@@ -22,6 +22,19 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Blue rounded rectangle decoration similar to the button style
+    final blueRoundedDecoration = BoxDecoration(
+      color: const Color(0xFF5467B8),
+      borderRadius: BorderRadius.circular(12),
+      boxShadow: [
+        BoxShadow(
+          color: const Color(0xFF5467B8).withValues(alpha: 0.3),
+          blurRadius: 8,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('DatePicker Demo'),
@@ -31,8 +44,14 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Standard DatePicker without decoration
+              Text(
+                'Standard DatePicker',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
               LinearDatePicker(
-                startDate: DateTime(2022),
+                startDate: DateTime(1960),
                 endDate: DateTime.now().add(Duration(days: 365)),
                 initialDate: DateTime.now(),
                 dateChangeListener: (DateTime selectedDate) {
@@ -40,33 +59,161 @@ class MyHomePage extends StatelessWidget {
                 },
                 showDay: true,
                 labelStyle: TextStyle(
-                  fontFamily: 'iran',
                   fontSize: 14.0,
                   color: Colors.black,
                 ),
                 selectedRowStyle: TextStyle(
-                  fontFamily: 'iran',
                   fontSize: 18.0,
                   color: Colors.deepOrange,
                 ),
                 unselectedRowStyle: TextStyle(
-                  fontFamily: 'iran',
                   fontSize: 16.0,
                   color: Colors.blueGrey,
                 ),
-                yearLabel: 'سال | year',
-                monthLabel: 'ماه | month',
-                dayLabel: 'روز | day',
+                yearLabel: 'year',
+                monthLabel: 'month',
+                dayLabel: 'day',
                 showLabels: true,
                 columnWidth: 100,
                 showMonthName: true,
-                isJalali: true,
+                isJalali: false,
                 debounceDuration: Duration(milliseconds: 400),
-                monthsNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',],
+                monthsNames: [
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December',
+                ],
               ),
+              SizedBox(height: 32),
+              // DatePicker with blue rounded decoration
+              Text(
+                'DatePicker with Decoration',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              LinearDatePicker(
+                startDate: DateTime(1960),
+                endDate: DateTime.now().add(Duration(days: 365)),
+                initialDate: DateTime.now(),
+                dateChangeListener: (DateTime selectedDate) {
+                  print('Decorated picker: $selectedDate');
+                },
+                showDay: true,
+                labelStyle: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black,
+                ),
+                selectedRowStyle: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                unselectedRowStyle: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey[600],
+                ),
+                yearLabel: 'Year',
+                monthLabel: 'Month',
+                dayLabel: 'Day',
+                showLabels: true,
+                columnWidth: 100,
+                columnSpacing: 16, // Spacing between columns
+                showMonthName: true,
+                isJalali: false,
+                // Apply the same decoration to all pickers
+                selectedItemDecoration: blueRoundedDecoration,
+                monthsNames: [
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December',
+                ],
+              ),
+              SizedBox(height: 32),
+              // DatePicker with different decorations for each column
+              Text(
+                'DatePicker with Different Decorations',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              LinearDatePicker(
+                startDate: DateTime(1960),
+                endDate: DateTime.now().add(Duration(days: 365)),
+                initialDate: DateTime.now(),
+                dateChangeListener: (DateTime selectedDate) {
+                  print('Multi-decorated picker: $selectedDate');
+                },
+                showDay: true,
+                labelStyle: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black,
+                ),
+                selectedRowStyle: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                unselectedRowStyle: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey[600],
+                ),
+                yearLabel: 'Year',
+                monthLabel: 'Month',
+                dayLabel: 'Day',
+                showLabels: true,
+                columnWidth: 100,
+                columnSpacing: 12, // Spacing between columns
+                showMonthName: true,
+                isJalali: false,
+                // Different decorations for each picker
+                monthDecoration: BoxDecoration(
+                  color: const Color(0xFF5467B8),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                dayDecoration: BoxDecoration(
+                  color: const Color(0xFF43A047),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                yearDecoration: BoxDecoration(
+                  color: const Color(0xFFE53935),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                monthsNames: [
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December',
+                ],
+              ),
+              SizedBox(height: 24),
               ElevatedButton(
                 child: Text(
-                  'Pick Date | انتخاب تاریخ',
+                  'Pick Date',
                 ),
                 onPressed: () {
                   showDateDialog(context);
@@ -90,6 +237,15 @@ class MyHomePage extends StatelessWidget {
           },
           showMonthName: true,
           isJalali: false,
+          selectedRowStyle: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          selectedItemDecoration: BoxDecoration(
+            color: const Color(0xFF5467B8),
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
     );

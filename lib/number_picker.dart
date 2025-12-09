@@ -203,6 +203,12 @@ class NumberPicker extends StatelessWidget {
           width: listViewWidth,
           child: Stack(
             children: <Widget>[
+              // Decoration is rendered first (behind the text)
+              _NumberPickerSelectedItemDecoration(
+                axis: scrollDirection,
+                itemExtent: itemExtent,
+                decoration: decoration,
+              ),
               ListView.builder(
                 scrollDirection: scrollDirection,
                 controller: intScrollController,
@@ -232,11 +238,6 @@ class NumberPicker extends StatelessWidget {
                           ),
                         );
                 },
-              ),
-              _NumberPickerSelectedItemDecoration(
-                axis: scrollDirection,
-                itemExtent: itemExtent,
-                decoration: decoration,
               ),
             ],
           ),
